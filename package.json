@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Gp2-Books/Project-Book-Client/issues"
   },
-  "homepage": "https://github.com/Gp2-Books/Project-Book-Client#readme"
+  "homepage": "https://github.com/Gp2-Books/Project-Book-Client#readme",
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
 }

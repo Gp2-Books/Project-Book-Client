@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="1078078274697-qh6v48qcjkvrd6d3lbqlkqif8ctfa3hb.apps.googleusercontent.com">
   <link rel="shortcut icon" href="https://e7.pngegg.com/pngimages/303/91/png-clipart-computer-icons-werner-books-favicon-blue-booking-icon-blue-angle.png">
   <script src="https://kit.fontawesome.com/bc382c3fce.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
@@ -28,9 +29,9 @@
                     <input type="password" class="form-control" id="login-password" autocomplete="current-password" required>
                 </div>
                 <button type="submit" class="login-btn">Login</button></br>
-                <button type="submit" class="login-btn">Login with Google</button></br>
-                <span>You dont have account? <a id="btn-register" href="">Sign Up</a></span>
             </form>
+                <button type="submit" class="g-signin2" data-onsuccess="onSignIn">Login with Google</button></br>
+                <span>You dont have account? <a id="btn-register" href="">Sign Up</a></span>
         </div>
     </section>
     <!-- END LOGIN -->
@@ -95,7 +96,7 @@
         </div>
     </section>
     <!-- END HOME PAGE -->
-
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="./js/main.js"></script>
 </body>

@@ -17,7 +17,7 @@ function afterLogin () {
 
 // function show register
 function showRegister() {
-  $('#register-page').show()
+  $('#register-page').show()  
   $('#login-page').hide()
   $('#home-page').hide()
 }
@@ -35,8 +35,7 @@ $('#btn-login').on('click', ev => {
 })
 
 // function register
-const register = ev => {
-  ev.preventDefault()
+const register = () => {
   
   const email = $('#register-email').val()
   const password = $('#register-password').val()
@@ -60,11 +59,10 @@ const register = ev => {
 
 // function login
 const login = ev => {
-  ev.preventDefault()
   
   const email = $("#login-email").val()
   const password = $("#login-password").val()
-  
+  console.log(email, password)
   $.ajax({
     method: 'POST',
     url: `${SERVER}/login`,
@@ -79,28 +77,67 @@ const login = ev => {
     afterLogin()
     fetchTodos()
   })
-  .fail(err => {
+  .fail(err =>   {  
     console.log(err);
+  })
+  .always( () => {
+    $("#login-email").val("")
+    $("#login-password").val("")
+  })
+}
+//function google login
+function onSignIn(googleUser) {
+  let googleToken = googleUser.getAuthResponse().id_token;
+  console.log(googleToken)
+  $.ajax({
+    url: `${SERVER}/googleLogin`,
+    method: 'POST',
+    data: {
+      googleToken
+    } 
+  })
+  .done(res => {
+    console.log(`glogin succes`)
+    localStorage.setItem('access_token', res.access_token)
+    afterLogin()
+    console.log(res)
+  })
+  .fail(err => {
+    console.log(err)
   })
 }
 
 // function logout
 function logout() {
   localStorage.removeItem('access_token')
-  showRegister()
+  beforeLogin ()
+  let auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
 }
 
 // save access token in application
-// $(document).ready(function () {
-//   const token = localStorage.getItem('access_token')
+$(document).ready(function () {
+  const token = localStorage.getItem('access_token')
   
-//   if (token) {
-//     afterLogin()
-//     fetchTodos()
-//   } else {
-//     beforeLogin()
-//   }
-// })
+  if (token) {
+    afterLogin()
+    fetchTodos()
+  } else {
+    beforeLogin()
+  }
+  $("#login-page").on("submit", (event) => {
+    event.preventDefault()
+    register()
+  } )
+
+  $("#register-page").on("submit", (event) => {
+    event.preventDefault()
+    register()
+  } )
+})
+
 
 // find All Books
 const fetchTodos = () => {
@@ -138,4 +175,3 @@ const fetchTodos = () => {
     console.log(err);
   })
 }
-
