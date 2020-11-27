@@ -10,7 +10,7 @@ function beforeLogin() {
 // function show home page
 function afterLogin () {
   $('#home-page').show()
-  fetchTodos()
+  fetchBook()
   $('#login-page').hide()
   $('#register-page').hide()
 }
@@ -75,7 +75,7 @@ const login = ev => {
     const token = response.access_token
     localStorage.setItem('access_token', token)
     afterLogin()
-    fetchTodos()
+  
   })
   .fail(err =>   {  
     console.log(err);
@@ -117,13 +117,13 @@ function logout() {
   });
 }
 
+
 // save access token in application
 $(document).ready(function () {
   const token = localStorage.getItem('access_token')
   
   if (token) {
     afterLogin()
-    fetchTodos()
   } else {
     beforeLogin()
   }
@@ -140,35 +140,49 @@ $(document).ready(function () {
 
 
 // find All Books
-const fetchTodos = () => {
+const fetchBook = () => {
   const access_token = localStorage.getItem('access_token')
+  $("#book-list").empty()
   
   $.ajax({
     method: 'GET',
-    url: `${SERVER}/todos`,
+    url: `${SERVER}/book`,
     headers: {
       access_token: access_token
     }
   })
   .done(response => {
-    const books = response.books
-    books.forEach(item => {
-      $('#todo-list').append(`
-        <div class="card">
-          <div class="card-left">
-            <div class="card-info">
-              <h5>${item.title}</h5>
-              <i class="far fa-star"></i>
-            </div>
-            <p>${item.description}</p>
-          </div>
-          <div class="card-right">
-            <p><span>status: </span>${item.status}</p>
-            <p>${item.due_date}</p>
-          </div>
+    const books = response
+    console.log(books )
+      $('#book-list').append(`
+      <div class="frame-book">
+        <div class="cover-book">
+            <img src="${books.image}" style="width: auto; height: 225px;" alt="">
         </div>
+        <div class="details-book">
+            <div class="title-book">
+                <p>Title Book</p>
+                <p>${books.title}</p>
+            </div>
+            <div class="author-book">
+                <p>Author book</p>
+                <p>${books.authors}</p>
+            </div>
+            <div class="isbn-book">
+                <p>ISBN</p>
+                <p>${books.isbn}</p>
+            </div>
+            <div class="desc-book">
+                <p>Description</p>
+                <p>${books.desc}</p>
+            </div>
+            <div class="rating-book">
+            <p>Rating</p>
+            <p>${books.rating}</p>
+        </div>
+        </div>
+     </div>
       `)
-    })
   })
   .fail(err => {
   console.log("fetchTodos -> err", err)
