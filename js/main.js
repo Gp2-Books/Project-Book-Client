@@ -157,31 +157,27 @@ const fetchBook = () => {
       $('#book-list').append(`
       <div class="frame-book">
         <div class="cover-book">
-            <img src="${books.image}" style="width: auto; height: 225px;" alt="">
+            <img src="${books.image}" style="width: auto; height: 325px;" alt="">
         </div>
         <div class="details-book">
             <div class="title-book">
-                <p>Title Book</p>
-                <p>${books.title}</p>
+                <p>Title Book: <span class="white">${books.title}<span></p>
             </div>
             <div class="author-book">
-                <p>Author book</p>
-                <p>${books.authors}</p>
+                <p>Author book: ${books.authors}</p>
             </div>
             <div class="isbn-book">
-                <p>ISBN</p>
-                <p>${books.isbn}</p>
+                <p>ISBN: ${books.isbn}</p>
             </div>
             <div class="desc-book">
-                <p>Description</p>
-                <p>${books.desc}</p>
+                <p>Description: ${books.desc}</p>
             </div>
             <div class="rating-book">
-            <p>Rating</p>
-            <p>${books.rating}</p>
+            <p>Rating: ${books.rating}</p>
         </div>
         </div>
      </div>
+     
       `)
   })
   .fail(err => {
